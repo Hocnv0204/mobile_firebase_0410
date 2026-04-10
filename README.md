@@ -275,93 +275,15 @@ users/{userId}
 
 ## 🔔 Thông báo nhắc nhở
 
-**Mô tả:** Hệ thống thông báo tự động nhắc nhở người dùng trước giờ chiếu phim.
+![Thông báo nhắc nhở](images/pushnotification.png)
+
+**Mô tả:** Hệ thống thông báo tự động gửi thông báo đến thiết bị để nhắc nhở người dùng trước giờ chiếu phim (ví dụ: "Nhắc giờ chiếu - Phim Avengers: Endgame sắp bắt đầu...").
 
 **Các thành phần:**
 - **ShowtimeReminderWorker:** WorkManager Worker, gửi notification local nhắc nhở trước giờ chiếu 1 tiếng
-- **AppFirebaseMessagingService:** Nhận push notification từ Firebase Cloud Messaging
-- **NotificationHelper:** Hiển thị notification trên thiết bị
-- **FCM Token:** Tự động lưu token FCM vào Firestore khi token được cấp mới
+- **AppFirebaseMessagingService:** Nhận push notification từ Firebase Cloud Messaging (FCM)
+- **NotificationHelper:** Hiển thị notification trên thiết bị với giao diện thân thiện
+- **FCM Token:** Tự động lưu token FCM vào Firestore khi token được cấp mới để hỗ trợ gửi thông báo từ server
 
 ---
 
-## 📁 Cấu trúc dự án
-
-```
-app/src/main/java/com/hocnv/mobile_0410/
-├── auth/                          # Module xác thực
-│   ├── LoginActivity.java         # Màn hình đăng nhập
-│   └── RegisterActivity.java      # Màn hình đăng ký
-├── home/                          # Module trang chủ
-│   └── HomeFragment.java          # Fragment danh sách phim đang chiếu
-├── movies/                        # Module phim
-│   ├── MoviesActivity.java        # Danh sách phim
-│   ├── MovieDetailActivity.java   # Chi tiết phim & suất chiếu
-│   ├── MovieAdapter.java          # Adapter RecyclerView phim
-│   ├── BookTicketActivity.java    # Đặt vé xem phim
-│   └── ShowtimeAdapter.java       # Adapter RecyclerView suất chiếu
-├── booking/                       # Module đặt vé
-│   ├── SeatSelectionActivity.java # Chọn ghế ngồi (realtime)
-│   ├── ShowtimeActivity.java      # Chọn suất chiếu
-│   ├── BookingConfirmActivity.java# Xác nhận & thanh toán
-│   └── BookingSuccessActivity.java# Đặt vé thành công
-├── tickets/                       # Module vé
-│   ├── MyTicketsFragment.java     # Danh sách vé của tôi
-│   └── TicketAdapter.java         # Adapter RecyclerView vé
-├── notifications/                 # Module thông báo
-│   ├── AppFirebaseMessagingService.java  # Nhận push notification
-│   ├── NotificationHelper.java    # Helper hiển thị notification
-│   └── ShowtimeReminderWorker.java# Worker nhắc nhở giờ chiếu
-├── data/                          # Tầng dữ liệu
-│   ├── FirestoreRefs.java         # Tên các collection Firestore
-│   └── models/                    # Data models
-│       ├── AppUser.java           # Model người dùng
-│       ├── Movie.java             # Model phim
-│       ├── Showtime.java          # Model suất chiếu
-│       ├── Theater.java           # Model rạp chiếu
-│       └── Ticket.java            # Model vé
-├── seed/                          # Module seed data (dev/test)
-├── profile/                       # Module hồ sơ cá nhân
-├── util/                          # Tiện ích
-├── MainActivity.java              # Activity chính (Bottom Navigation)
-└── SplashActivity.java            # Splash screen
-```
-
----
-
-## 🚀 Hướng dẫn cài đặt
-
-### Yêu cầu
-- Android Studio Ladybug trở lên
-- JDK 11+
-- Tài khoản Firebase
-
-### Các bước
-
-1. **Clone dự án**
-   ```bash
-   git clone <repository-url>
-   ```
-
-2. **Cấu hình Firebase**
-   - Tạo project Firebase tại [Firebase Console](https://console.firebase.google.com/)
-   - Bật **Authentication** → Email/Password
-   - Tạo **Firestore Database**
-   - Bật **Cloud Messaging**
-   - Tải file `google-services.json` và đặt vào thư mục `app/`
-
-3. **Build & Run**
-   ```bash
-   ./gradlew assembleDebug
-   ```
-   Hoặc mở bằng Android Studio và nhấn **Run ▶️**
-
----
-
-## 👨‍💻 Tác giả
-
-- **HocNV** - *Nguyễn Văn Hoc*
-
----
-
-> **Ghi chú:** Ứng dụng sử dụng Firebase Firestore Transaction để đảm bảo tính nhất quán khi nhiều người dùng cùng đặt vé cho một suất chiếu, tránh xung đột ghế ngồi (race condition).

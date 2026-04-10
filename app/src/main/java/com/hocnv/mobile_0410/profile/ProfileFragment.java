@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.hocnv.mobile_0410.R;
 import com.hocnv.mobile_0410.auth.LoginActivity;
 import com.hocnv.mobile_0410.data.FirestoreRefs;
+import com.hocnv.mobile_0410.notifications.NotificationHelper;
 import com.hocnv.mobile_0410.seed.SeedDataActivity;
 
 public class ProfileFragment extends Fragment {
@@ -58,6 +60,17 @@ public class ProfileFragment extends Fragment {
 
         btnSeed.setOnClickListener(v ->
                 startActivity(new Intent(requireContext(), SeedDataActivity.class)));
+
+        Button btnTestNoti = view.findViewById(R.id.btnTestNoti);
+        btnTestNoti.setOnClickListener(v -> {
+            NotificationHelper.showReminder(
+                    requireContext(),
+                    (int) (System.currentTimeMillis() % Integer.MAX_VALUE),
+                    "Nhắc giờ chiếu",
+                    "Phim Avengers: Endgame sắp bắt đầu lúc 19:00 tại CGV Vincom Center!"
+            );
+            Toast.makeText(requireContext(), "Đã gửi notification!", Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void loadUserData() {

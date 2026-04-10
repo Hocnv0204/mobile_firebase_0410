@@ -65,6 +65,19 @@
         app:layout_constraintTop_toBottomOf="@id/tvEmail" />
 
     <Button
+        android:id="@+id/btnTestNoti"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:text="Test thông báo nhắc giờ chiếu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnSeed" />
+
+    <Button
         android:id="@+id/btnLogout"
         style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="0dp"
@@ -75,6 +88,6 @@
         android:text="Đăng xuất"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnSeed" />
+        app:layout_constraintTop_toBottomOf="@id/btnTestNoti" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

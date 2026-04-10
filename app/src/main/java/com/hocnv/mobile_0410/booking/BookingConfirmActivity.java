@@ -182,7 +182,7 @@ public class BookingConfirmActivity extends AppCompatActivity {
         });
     }
 
-    private void scheduleReminder(String title, long showtimeMillis) {
+    private void scheduleReminder(String title, long showtimeMillis, String theater) {
         long now = System.currentTimeMillis();
         long remindAt = showtimeMillis - TimeUnit.HOURS.toMillis(1);
         long delay = Math.max(0, remindAt - now);
@@ -190,6 +190,7 @@ public class BookingConfirmActivity extends AppCompatActivity {
         Data input = new Data.Builder()
                 .putString(ShowtimeReminderWorker.KEY_MOVIE_TITLE, title == null ? "" : title)
                 .putLong(ShowtimeReminderWorker.KEY_SHOWTIME_MILLIS, showtimeMillis)
+                .putString(ShowtimeReminderWorker.KEY_THEATER_NAME, theater == null ? "" : theater)
                 .build();
 
         OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(ShowtimeReminderWorker.class)
