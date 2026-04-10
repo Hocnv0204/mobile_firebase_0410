@@ -3,11 +3,13 @@ package com.hocnv.mobile_0410.movies;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.hocnv.mobile_0410.R;
 import com.hocnv.mobile_0410.data.models.Movie;
 
@@ -29,15 +31,23 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.VH> {
     @NonNull
     @Override
     public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie, parent, false);
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_movie, parent, false);
         return new VH(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull VH holder, int position) {
         Movie m = items.get(position);
+
         holder.tvTitle.setText(m.title == null ? "" : m.title);
-        holder.tvDesc.setText(m.description == null ? "" : m.description);
+        holder.tvGenre.setText(m.genre == null ? "" : m.genre);
+        holder.tvRating.setText("\u2B50 " + m.rating);
+        Glide.with(holder.itemView.getContext())
+                .load(m.posterUrl)
+                .centerCrop()
+                .into(holder.ivPoster);
+
         holder.itemView.setOnClickListener(v -> listener.onClick(m));
     }
 
@@ -47,14 +57,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.VH> {
     }
 
     static class VH extends RecyclerView.ViewHolder {
+        ImageView ivPoster;
         TextView tvTitle;
-        TextView tvDesc;
+        TextView tvGenre;
+        TextView tvRating;
 
         VH(@NonNull View itemView) {
             super(itemView);
+            ivPoster = itemView.findViewById(R.id.ivPoster);
             tvTitle = itemView.findViewById(R.id.tvTitle);
-            tvDesc = itemView.findViewById(R.id.tvDesc);
+            tvGenre = itemView.findViewById(R.id.tvGenre);
+            tvRating = itemView.findViewById(R.id.tvRating);
         }
     }
 }
-

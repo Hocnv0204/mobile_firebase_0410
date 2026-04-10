@@ -16,20 +16,25 @@
         android:theme="@style/Theme.Mobile_0410">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <activity android:name=".MainActivity" android:exported="false" />
         <activity android:name=".auth.LoginActivity" android:exported="false" />
         <activity android:name=".auth.RegisterActivity" android:exported="false" />
         <activity android:name=".movies.MoviesActivity" android:exported="false" />
         <activity android:name=".movies.MovieDetailActivity" android:exported="false" />
         <activity android:name=".movies.BookTicketActivity" android:exported="false" />
+        <activity android:name=".booking.ShowtimeActivity" android:exported="false" />
+        <activity android:name=".booking.SeatSelectionActivity" android:exported="false" />
+        <activity android:name=".booking.BookingConfirmActivity" android:exported="false" />
+        <activity android:name=".booking.BookingSuccessActivity" android:exported="false" />
+        <activity android:name=".tickets.TicketDetailActivity" android:exported="false" />
         <activity android:name=".seed.SeedDataActivity" android:exported="false" />
 
         <service

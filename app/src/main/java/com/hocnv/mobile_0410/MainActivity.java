@@ -51,7 +51,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if (savedInstanceState == null) {
-            bottomNav.setSelectedItemId(R.id.nav_home);
+            String tab = getIntent().getStringExtra("tab");
+            if ("tickets".equals(tab)) {
+                bottomNav.setSelectedItemId(R.id.nav_tickets);
+            } else {
+                bottomNav.setSelectedItemId(R.id.nav_home);
+            }
         }
 
         maybeRequestNotificationPermission();

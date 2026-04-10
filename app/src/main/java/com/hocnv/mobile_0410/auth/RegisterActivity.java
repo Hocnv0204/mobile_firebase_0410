@@ -1,5 +1,6 @@
 package com.hocnv.mobile_0410.auth;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.hocnv.mobile_0410.MainActivity;
 import com.hocnv.mobile_0410.R;
 import com.hocnv.mobile_0410.data.FirestoreRefs;
 import com.hocnv.mobile_0410.data.models.AppUser;
@@ -71,7 +73,9 @@ public class RegisterActivity extends AppCompatActivity {
                                 .document(user.getUid())
                                 .set(appUser)
                                 .addOnSuccessListener(unused -> {
-                                    Toast.makeText(this, "Đăng ký thành công. Hãy đăng nhập.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(this, MainActivity.class)
+                                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                                     finish();
                                 })
                                 .addOnFailureListener(e -> Toast.makeText(this, "Lưu user thất bại: " + e.getMessage(), Toast.LENGTH_LONG).show());

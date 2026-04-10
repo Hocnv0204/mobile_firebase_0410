@@ -12,8 +12,16 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.hocnv.mobile_0410.MainActivity;
 import com.hocnv.mobile_0410.R;
-import com.hocnv.mobile_0410.movies.MoviesActivity;
+import com.hocnv.mobile_0410.data.FirestoreRefs;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth auth;
@@ -45,7 +53,8 @@ public class LoginActivity extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
                         btnLogin.setEnabled(true);
                         if (task.isSuccessful()) {
-                            startActivity(new Intent(this, MoviesActivity.class));
+                            saveFcmToken();
+                            startActivity(new Intent(this, MainActivity.class));
                             finish();
                         } else {
                             String msg = task.getException() != null ? task.getException().getMessage() : "Đăng nhập thất bại.";
@@ -56,5 +65,18 @@ public class LoginActivity extends AppCompatActivity {
 
         tvGoRegister.setOnClickListener(v -> startActivity(new Intent(this, RegisterActivity.class)));
     }
-}
 
+    private void saveFcmToken() {
+        FirebaseUser user = auth.getCurrentUser();
+        if (user == null) return;
+        FirebaseMessaging.getInstance().getToken()
+                .addOnSuccessListener(token -> {
+                    Map<String, Object> update = new HashMap<>();
+                    update.put("fcmToken", token);
+                    FirebaseFirestore.getInstance()
+                            .collection(FirestoreRefs.COL_USERS)
+                            .document(user.getUid())
+                            .set(update, SetOptions.merge());
+                });
+    }
+}
