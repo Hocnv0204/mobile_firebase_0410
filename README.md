@@ -6,7 +6,6 @@
 
 ## 📋 Mục lục
 
-- [Công nghệ sử dụng](#-công-nghệ-sử-dụng)
 - [Chức năng chi tiết](#-chức-năng-chi-tiết)
   - [1. Đăng nhập](#1-đăng-nhập-login)
   - [2. Đăng ký](#2-đăng-ký-register)
@@ -16,25 +15,11 @@
   - [6. Chọn ghế ngồi](#6-chọn-ghế-ngồi)
   - [7. Vé của tôi](#7-vé-của-tôi)
   - [8. Chi tiết vé](#8-chi-tiết-vé)
+- [Thông báo nhắc nhở](#-thông-báo-nhắc-nhở)
+- [Công nghệ sử dụng](#-công-nghệ-sử-dụng)
 - [Cơ sở dữ liệu Firestore](#-cơ-sở-dữ-liệu-firestore)
 - [Cấu trúc dự án](#-cấu-trúc-dự-án)
 - [Hướng dẫn cài đặt](#-hướng-dẫn-cài-đặt)
-
----
-
-## 🛠 Công nghệ sử dụng
-
-| Công nghệ | Mô tả |
-|---|---|
-| **Java 11** | Ngôn ngữ lập trình chính |
-| **Android SDK 36** | Target SDK mới nhất |
-| **Firebase Auth** | Xác thực người dùng (Email/Password) |
-| **Firebase Firestore** | Cơ sở dữ liệu NoSQL realtime |
-| **Firebase Cloud Messaging** | Push notification |
-| **WorkManager** | Lên lịch nhắc nhở trước giờ chiếu |
-| **Glide** | Tải và hiển thị hình ảnh phim |
-| **ZXing** | Tạo mã QR cho vé điện tử |
-| **Material Design** | Giao diện Material UI |
 
 ---
 
@@ -226,6 +211,36 @@
 
 ---
 
+## 🔔 Thông báo nhắc nhở
+
+![Thông báo nhắc nhở](images/pushnotification.png)
+
+**Mô tả:** Hệ thống thông báo tự động gửi thông báo đến thiết bị để nhắc nhở người dùng trước giờ chiếu phim (ví dụ: "Nhắc giờ chiếu - Phim Avengers: Endgame sắp bắt đầu...").
+
+**Các thành phần:**
+- **ShowtimeReminderWorker:** WorkManager Worker, gửi notification local nhắc nhở trước giờ chiếu 1 tiếng
+- **AppFirebaseMessagingService:** Nhận push notification từ Firebase Cloud Messaging (FCM)
+- **NotificationHelper:** Hiển thị notification trên thiết bị với giao diện thân thiện
+- **FCM Token:** Tự động lưu token FCM vào Firestore khi token được cấp mới để hỗ trợ gửi thông báo từ server
+
+---
+
+## 🛠 Công nghệ sử dụng
+
+| Công nghệ | Mô tả |
+|---|---|
+| **Java 11** | Ngôn ngữ lập trình chính |
+| **Android SDK 36** | Target SDK mới nhất |
+| **Firebase Auth** | Xác thực người dùng (Email/Password) |
+| **Firebase Firestore** | Cơ sở dữ liệu NoSQL realtime |
+| **Firebase Cloud Messaging** | Push notification |
+| **WorkManager** | Lên lịch nhắc nhở trước giờ chiếu |
+| **Glide** | Tải và hiển thị hình ảnh phim |
+| **ZXing** | Tạo mã QR cho vé điện tử |
+| **Material Design** | Giao diện Material UI |
+
+---
+
 ## 💾 Cơ sở dữ liệu Firestore
 
 ### Cấu trúc Collections
@@ -270,20 +285,3 @@ users/{userId}
 ├── fcmToken: string | null    // Token FCM cho push notification
 └── id: string                 // ID người dùng
 ```
-
----
-
-## 🔔 Thông báo nhắc nhở
-
-![Thông báo nhắc nhở](images/pushnotification.png)
-
-**Mô tả:** Hệ thống thông báo tự động gửi thông báo đến thiết bị để nhắc nhở người dùng trước giờ chiếu phim (ví dụ: "Nhắc giờ chiếu - Phim Avengers: Endgame sắp bắt đầu...").
-
-**Các thành phần:**
-- **ShowtimeReminderWorker:** WorkManager Worker, gửi notification local nhắc nhở trước giờ chiếu 1 tiếng
-- **AppFirebaseMessagingService:** Nhận push notification từ Firebase Cloud Messaging (FCM)
-- **NotificationHelper:** Hiển thị notification trên thiết bị với giao diện thân thiện
-- **FCM Token:** Tự động lưu token FCM vào Firestore khi token được cấp mới để hỗ trợ gửi thông báo từ server
-
----
-
